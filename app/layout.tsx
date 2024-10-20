@@ -7,12 +7,12 @@ import { Footer } from "@/components/footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "DISC Fall Workshop Series Website",
+  title: "Mayfest Productions Learning App",
   metadataBase: new URL(
-    "https://disc-fall-2024-workshop-series-website.vercel.app/"
+    "https://mayfest-learning-app-instructions.vercel.app/about"
   ),
   description:
-    "DISC Fall Workshop Series Website is a website that provides information about the workshops that are being conducted in the Fall 2024 Quarter.",
+    "Learning project for new comers to the Mayfest Productions Technology Team. Completing this project will give you a good understanding of web development in Mayfest Productions. You will learn Next.js, React, TypeScript, Drizzle, Tailwind CSS, and Supabase.",
 };
 
 export default function RootLayout({
