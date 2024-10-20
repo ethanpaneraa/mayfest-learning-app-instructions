@@ -9,15 +9,11 @@ import { BasePath } from "./global_constants";
 
 export const NAVLINKS = [
   {
-    title: "Content",
-    href: `/${BasePath.CONTENT}${page_routes[0].href}`,
+    title: "Instructions",
+    href: `/${BasePath.INSTRUCTIONS}${page_routes[0].href}`,
   },
   {
-    title: "Schedule",
-    href: `/${BasePath.SCHEDULE}`,
-  },
-  {
-    title: "About DISC",
+    title: "About Mayfest",
     href: `/${BasePath.ABOUT}`,
   },
 ];
@@ -29,9 +25,7 @@ export function Navbar() {
         <div className="flex items-center gap-5">
           <SheetLeftbar />
           <div className="flex items-center gap-6">
-            <div className="sm:flex hidden">
-              <Logo />
-            </div>
+            <div className="sm:flex hidden"></div>
             <div className="lg:flex hidden items-center gap-4 text-sm font-medium text-muted-foreground">
               <NavMenu />
             </div>
@@ -48,28 +42,6 @@ export function Navbar() {
         </div>
       </div>
     </nav>
-  );
-}
-
-export function Logo() {
-  return (
-    <Link href="/" className="flex items-center gap-2.5">
-      <svg
-        width="15"
-        height="15"
-        viewBox="0 0 15 15"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M 5.1807 9.9704 L 1.7226 7.0688 L 4.6243 3.6107 L 10.4804 9.5067 L 13.3821 6.0487 L 9.924 3.147"
-          stroke="currentColor"
-          strokeWidth="2"
-          fillRule="nonzero"
-        ></path>
-      </svg>
-      <h2 className="text-md font-bold">DISC Workshop Series</h2>
-    </Link>
   );
 }
 

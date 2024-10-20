@@ -9,24 +9,26 @@ export default function Home() {
     <div className="flex sm:min-h-[91vh] min-h-[88vh] flex-col items-center justify-center text-center px-2 py-8">
       <div>
         <Image
-          src={"/disc-logo.png"}
-          alt="disco logo"
-          width={384}
-          height={384}
+          src="https://www.dilloday.com/favicon.ico"
+          alt="dillo day logo"
+          width={240}
+          height={240}
           className="mb-8"
         />
-        <h2 className="text-sm mb-6 sm:text-xl font-bold text-logo">
-          Discover & Innovate for Social Change
-        </h2>
       </div>
       <h1 className="text-xl font-bold mb-4 sm:text-6xl">
-        Fall Workshop Series
+        Mayfest Productions
       </h1>
+      <h2 className="text-lg font-bold mb-4 sm:text-4xl">
+        Learning App Tutorial
+      </h2>
       <p className="mb-8 sm:text-xl max-w-[800px] text-muted-foreground">
-        This is a workshop series that will introduce you to the essentials of
-        all things modern web development. In this workshop series, you will
-        learn how to build a modern web application from scratch using the
-        latest technologies and best practices.
+        This is the website for the Mayfest Productions Learning App! In this
+        tutorial, you will building a web application that connects to the
+        Spotify API and allows for users to display their top tracks and
+        artists. This tutorial is designed for newcomers to the Mayfest
+        Productions Technology Team and will cover the basics of web development
+        in Mayfest Productions.
       </p>
       <div className="flex flex-row items-center gap-5">
         <Link
@@ -36,14 +38,14 @@ export default function Home() {
           Get Started
         </Link>
         <Link
-          href="https://discord.gg/mqRQ7s9CyS"
+          href="https://www.instagram.com/dillo_day/"
           className={buttonVariants({
             variant: "outline",
             className: "px-6",
             size: "lg",
           })}
         >
-          Join DISC
+          Follow Mayfest Productions
         </Link>
       </div>
     </div>

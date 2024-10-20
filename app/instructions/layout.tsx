@@ -1,6 +1,6 @@
 import { Leftbar } from "@/components/Leftbar";
 
-export default function ScheduleLayout({
+export default function InstructionsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

@@ -11,34 +11,37 @@ type PageProps = {
   params: { slug: string[] };
 };
 
-export default async function ContentPage({
+export default async function InstructionsPage({
   params: { slug = [] },
 }: PageProps) {
   const pathName = slug.join("/");
-  const res = await getContentsForSlug(`${BasePath.CONTENT}/${pathName}`);
+  const res = await getContentsForSlug(`${BasePath.INSTRUCTIONS}/${pathName}`);
 
   if (!res) notFound();
+
+  const { frontmatter, content } = res;
+
   return (
     <div className="flex items-start gap-10">
       <div className="flex-[3] pt-10">
         <GenericBreadcrumb paths={slug} />
         <Typography>
-          <h1 className="text-3xl -mt-2">{res.frontmatter.title}</h1>
+          <h1 className="text-3xl -mt-2">{frontmatter.title}</h1>
           <p className="-mt-4 text-muted-foreground text-[16.5px]">
-            {res.frontmatter.description}
+            {frontmatter.description}
           </p>
-          <div>{res.content}</div>
+          <div>{content}</div>
           <Pagination pathname={pathName} />
         </Typography>
       </div>
-      <Toc path={pathName} type={BasePath.CONTENT} />
+      <Toc path={pathName} type={BasePath.INSTRUCTIONS} />
     </div>
   );
 }
 
 export async function generateMetadata({ params: { slug = [] } }: PageProps) {
   const pathName = slug.join("/");
-  const res = await getContentsForSlug(`${BasePath.CONTENT}/${pathName}`);
+  const res = await getContentsForSlug(`${BasePath.INSTRUCTIONS}/${pathName}`);
 
   if (!res) return null;
   const { frontmatter } = res;
