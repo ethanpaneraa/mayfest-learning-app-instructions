@@ -42,7 +42,7 @@ export default function Search() {
     const firstSegment = href.split("/")[1];
     return Object.values(BasePath).includes(firstSegment as BasePath)
       ? firstSegment
-      : BasePath.CONTENT;
+      : BasePath.INSTRUCTIONS;
   };
 
   return (
