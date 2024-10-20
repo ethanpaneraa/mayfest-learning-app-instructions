@@ -97,11 +97,28 @@ export async function getContentsForSlug(
   { frontmatter: BaseMdxFrontmatter; content: React.ReactElement } | undefined
 > {
   try {
+    console.log("Attempting to fetch content for slug:", slug);
     const contentPath = getContentPath(slug);
+    console.log("Content path:", contentPath);
+
+    const fileExists = await fs
+      .access(contentPath)
+      .then(() => true)
+      .catch(() => false);
+    if (!fileExists) {
+      console.log("File not found:", contentPath);
+      return undefined;
+    }
+
     const rawMdx = await fs.readFile(contentPath, "utf-8");
-    return await parseMdx<BaseMdxFrontmatter>(rawMdx);
+    console.log("File read successfully, content length:", rawMdx.length);
+
+    const parsedContent = await parseMdx<BaseMdxFrontmatter>(rawMdx);
+    console.log("MDX parsed successfully");
+
+    return parsedContent;
   } catch (err) {
-    console.error(err);
+    console.error("Error in getContentsForSlug:", err);
     return undefined;
   }
 }
@@ -125,7 +142,9 @@ function sluggify(text: string) {
 }
 
 function getContentPath(slug: string) {
-  return path.join(process.cwd(), "/contents/", `${slug}/index.mdx`);
+  // Remove leading slash if present
+  slug = slug.replace(/^\//, "");
+  return path.join(process.cwd(), "contents", `${slug}`, "index.mdx");
 }
 
 // for copying the code

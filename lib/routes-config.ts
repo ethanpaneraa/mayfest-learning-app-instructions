@@ -14,6 +14,12 @@ export const ROUTES: EachRoute[] = [
     basePath: "instructions",
     items: [{ title: "Introduction", href: "/introduction" }],
   },
+  {
+    title: "About",
+    href: "/about",
+    noLink: true,
+    basePath: "about",
+  },
 ];
 
 type Page = { title: string; href: string; basePath?: string };

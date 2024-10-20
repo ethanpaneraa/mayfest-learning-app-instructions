@@ -6,15 +6,23 @@ import { getContentsForSlug } from "@/lib/markdown";
 import { Typography } from "@/components/typography";
 import GenericBreadcrumb from "@/components/generic-breadcrumb";
 import { BasePath } from "@/components/global_constants";
+import fs from "fs";
+import path from "path";
 
 type PageProps = {
   params: { slug: string[] };
 };
 
-export default async function AboutPage({
-  params: { slug = [] },
-}: PageProps) {
-  const pathName = slug.join("/");
+function getAllAboutFiles() {
+  const aboutDir = path.join(process.cwd(), "contents/about");
+  return fs
+    .readdirSync(aboutDir)
+    .filter((file) => file.endsWith(".mdx"))
+    .map((file) => file.replace(/\.mdx$/, ""));
+}
+
+export default async function AboutPage({ params: { slug = [] } }: PageProps) {
+  const pathName = slug.length > 0 ? slug.join("/") : "index";
   const res = await getContentsForSlug(`${BasePath.ABOUT}/${pathName}`);
 
   if (!res) notFound();
@@ -52,7 +60,13 @@ export async function generateMetadata({ params: { slug = [] } }: PageProps) {
 }
 
 export function generateStaticParams() {
-  return page_routes.map((item) => ({
-    slug: item.href.split("/").slice(1),
-  }));
+  // Get all MDX files in the about directory
+  const aboutFiles = getAllAboutFiles(); // You'll need to implement this function
+
+  return [
+    { slug: [] }, // For the root /about page
+    ...aboutFiles.map((file) => ({
+      slug: file.replace(/\.mdx$/, "").split("/"),
+    })),
+  ];
 }
