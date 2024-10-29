@@ -1,0 +1,82 @@
+---
+title: Setup the required accounts for development in Mayfest Productions
+description: Step-by-step guide for all of the accounts you need to be an engineer for Mayfest Productions
+---
+
+# Setting Up Required Accounts
+
+Before continuing with the development setup, you'll need to create accounts with several services. Follow these steps to get everything set up:
+
+## GitHub Account Setup
+
+GitHub is where we'll host our code and collaborate with other developers.
+
+1. **Create a GitHub Account**:
+
+   - Visit [GitHub's signup page](https://github.com/signup)
+   - Enter your email address
+   - Create a strong password
+   - Choose a unique username
+   - Verify your email address when prompted
+
+2. **Enable Two-Factor Authentication (2FA)**:
+   - Go to Settings → Security
+   - Follow the prompts to set up 2FA
+   - Store your recovery codes in a safe place
+
+## Spotify Developer Account
+
+You'll need a Spotify Developer account to access their API.
+
+1. **Create a Spotify Account**:
+
+   - If you don't already have one, create a [Spotify account](https://www.spotify.com/signup)
+   - Free accounts work fine for development
+
+2. **Access Developer Dashboard**:
+
+   - Visit the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+   - Log in with your Spotify credentials
+   - Accept the Developer Terms of Service
+
+3. **Create Your First App**:
+   - Click "Create App" in the dashboard
+   - Fill in the required information:
+     - App name (this can be anything)
+     - App description (this can be anything)
+     - Redirect URI (use `http://localhost:3000/api/auth/callback/spotify` for development) - this is given to you, this is a pain to setup
+   - Save your Client ID and Client Secret somewhere secure
+
+## Supabase Account Setup
+
+Supabase will serve as our database and backend service.
+
+1. **Create a Supabase Account**:
+
+   - Visit [Supabase](https://supabase.com)
+   - Click "Start your project"
+   - Sign up with GitHub (recommended) or email
+
+2. **Create Your First Project**:
+
+   - Click "New Project" in the dashboard
+   - Choose a name for your project (i.e Mayfest-Learning-App)
+   - Set a secure database password
+   - Choose the region closest to you (Ohio)
+   - Select the free tier
+
+3. **Save Important Credentials**:
+   - After project creation, save your:
+     - Project URL
+     - anon/public key
+     - service_role key (keep this secret!)
+
+## Security Notes
+
+- Never commit API keys, secrets, or credentials to GitHub
+- Use environment variables for sensitive information
+- If you accidentally expose any credentials, immediately rotate them in the respective dashboards
+
+## Next Steps
+
+Once you have all these accounts set up, you can continue with the project setup. Make sure to keep all your credentials in a secure place - you'll need them when we configure the application's environment variables.
