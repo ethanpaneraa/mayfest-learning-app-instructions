@@ -13,7 +13,7 @@ export function Footer() {
             >
               GitHub
             </Link>
-            .
+            . Built by Ethan Pineda
           </p>
         </div>
       </div>
