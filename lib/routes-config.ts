@@ -29,6 +29,26 @@ export const ROUTES: EachRoute[] = [
     ],
   },
   {
+    title: "Project Instructions",
+    href: "/project-instructions",
+    noLink: true,
+    basePath: "instructions",
+    items: [
+      {
+        title: "Task One - Building a Landing Page",
+        href: "/step-one",
+      },
+      {
+        title: "Task Two -  Building a Login Page",
+        href: "/step-two",
+      },
+      {
+        title: "Task Three - Building an API",
+        href: "/step-three",
+      },
+    ],
+  },
+  {
     title: "About",
     href: "/about",
     noLink: true,

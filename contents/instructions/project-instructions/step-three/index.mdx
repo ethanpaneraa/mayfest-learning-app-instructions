@@ -1,0 +1,169 @@
+---
+title: Task 3 - Implementing Spotify API Utilities
+description: Create type-safe utilities for interacting with the Spotify Web API
+---
+
+In this task, you'll build utility functions to interact with the Spotify Web API. You'll learn how to:
+
+- Work with TypeScript types and interfaces
+- Handle API authentication and responses
+- Create reusable fetch utilities
+
+## Setup
+
+1. Create a new branch:
+
+```bash
+git checkout -b task/spotify-utils
+```
+
+2. Create a new file at `src/utils/spotify.ts`
+
+## Part 1: Type Definitions
+
+First, we need to define TypeScript interfaces for the Spotify API responses. Here's one to get you started:
+
+```typescript
+type SpotifyUserProfile = {
+  display_name: string;
+  email: string;
+};
+```
+
+Your task is to create interfaces for:
+
+1. `SpotifyPlaylist` - Should include playlist items with id, name, and image URLs
+2. `SpotifyTrack` - Should capture track details including album images and artist names
+3. `SpotifyListeningHistory` - Should contain recently played tracks with timestamps
+4. `SpotifyArtist` - Should include artist details like name, images, and popularity
+5. `SpotifyTopArtists` and `SpotifyTopTracks` - Should be arrays of the respective types
+
+💡 Tip: Look at the Spotify Web API documentation to understand the response structure!
+
+## Part 2: Core Utilities
+
+You'll need some base utilities to handle authentication and API calls. Here's the start:
+
+```typescript
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/server/auth";
+
+const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
+```
+
+Next, copy the following code to your file:
+
+```typescript
+async function getAccessToken() {
+  const session = await getServerSession(authOptions);
+  if (!session?.accessToken) {
+    throw new Error("No access token available");
+  }
+  return session.accessToken;
+}
+
+async function spotifyFetch<T>(endpoint: string): Promise<T> {
+  const accessToken = await getAccessToken();
+  if (!accessToken) {
+    throw new Error("No access token available");
+  }
+  console.log("Using access token:", accessToken);
+  const response = await fetch(`${SPOTIFY_API_BASE_URL}${endpoint}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  if (!response.ok) {
+    const errorBody = await response.text();
+    console.error("Spotify API error:", response.status, errorBody);
+    throw new Error(`Failed to fetch from Spotify API: ${response.statusText}`);
+  }
+  return response.json() as Promise<T>;
+}
+```
+
+## Part 3: API Functions
+
+We gave you a generic function, `spotifyFetch` that does the majoirty of the interaction between your client (browser) and the Spotify web API. Next, you need to actually implement the functions to get data for the user to display it on the frontend
+
+1. `getSpotifyUserProfile()`:
+
+   - Endpoint: `/me`
+   - Returns: SpotifyUserProfile
+
+2. `getSpotifyUserPlayList()`:
+
+   - Endpoint: `/me/playlists`
+   - Returns: SpotifyPlaylist
+
+3. `getSpotifyUserListeningHistory()`:
+
+   - Endpoint: `/me/player/recently-played`
+   - Returns: SpotifyListeningHistory
+
+4. `getSpotifyTopArtists()`:
+
+   - Endpoint: `/me/top/artists`
+   - Should accept a timeRange parameter
+   - Include limit=50 in the query
+   - Returns: SpotifyTopArtists
+
+5. `getSpotifyTopTracks()`:
+   - Endpoint: `/me/top/tracks`
+   - Similar parameters as top artists
+   - Returns: SpotifyTopTracks
+
+💡 Tips:
+
+- Use the `spotifyFetch` utility you created
+- Handle query parameters properly
+- Consider error cases
+- Use TypeScript generics for type safety
+
+## Testing Your Implementation
+
+If you login, you should see the data being displayed to the user!
+
+## Common Issues to Watch For
+
+- Missing or expired access tokens
+- Incorrect type definitions
+- Unhandled API errors
+- Rate limiting issues
+
+## Committing Your Work
+
+1. Stage your changes:
+
+```bash
+git add src/utils/spotify.ts
+```
+
+2. Commit:
+
+```bash
+git commit -m "feat: add spotify api utilities"
+```
+
+3. Push to your fork:
+
+```bash
+git push origin task/spotify-utils
+```
+
+4. Create a Pull Request:
+   - Go to your fork on GitHub
+   - Click "Pull Request"
+   - Select your branch
+   - Add a brief description of what you implemented
+   - Then merge it to your main branch!
+
+## Resources
+
+- [Spotify Web API Documentation](https://developer.spotify.com/documentation/web-api)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
+- [Next.js API Routes](https://nextjs.org/docs/api-routes/introduction)
+
+Remember to test your implementation thoroughly! These utilities will be the foundation for displaying user data in the application.
+
+Need help? Check the project Discord channel!

@@ -1,0 +1,200 @@
+---
+title: Task 2 - Building the Login Page
+description: Detailed explanation of the Spotify Stats login page implementation
+---
+
+## File Structure Setup
+
+First, create the necessary directory and file:
+
+```bash
+mkdir -p src/app/login
+touch src/app/login/page.tsx
+```
+
+## Code Implementation
+
+Copy the provided code into `src/app/login/page.tsx`. Let's break down every part of this implementation in detail:
+
+### 1. Imports
+
+```typescript
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/server/auth";
+import { redirect } from "next/navigation";
+import Link from "next/link";
+```
+
+- `getServerSession`: A Next.js function that retrieves the current authentication session on the server side
+- `authOptions`: Our authentication configuration that specifies how we handle Spotify OAuth
+- `redirect`: Next.js utility for redirecting users to different pages
+- `Link`: Next.js component for client-side navigation
+
+### 2. Component Definition
+
+```typescript
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: { error?: string; callbackUrl?: string };
+});
+```
+
+This defines an async server component that:
+
+- Takes a `searchParams` prop using TypeScript interface
+- Handles two optional URL parameters:
+  - `error`: Captures any authentication errors
+  - `callbackUrl`: Specifies where to redirect after login
+
+### 3. Session Check
+
+```typescript
+const session = await getServerSession(authOptions);
+
+if (session) {
+  redirect("/dashboard");
+}
+```
+
+This code:
+
+- Checks if user is already authenticated
+- If they are (session exists), automatically redirects to dashboard
+- Prevents authenticated users from seeing the login page
+
+### 4. Component Return/UI
+
+```typescript
+return (
+  <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <h1 className="mb-8 text-4xl font-bold">Login to Spotify Stats</h1>
+    {/* Error handling */}
+    {searchParams.error && (
+      <div className="mb-4 text-red-500">
+        Error: {searchParams.error}. Please try again.
+        <br />
+        Full URL: {JSON.stringify(searchParams)}
+      </div>
+    )}
+    {/* Login button */}
+    <Link
+      href="/api/auth/signin/spotify"
+      className="rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+    >
+      Sign in with Spotify
+    </Link>
+  </div>
+);
+```
+
+This builds a UI that:
+
+- Creates a full-height centered container using Tailwind's flexbox utilities
+- Displays a welcoming header
+- Shows error messages if authentication fails
+- Provides a Spotify-styled login button
+
+## Key Features Explained
+
+1. **Error Handling**:
+
+   - Displays errors from failed authentication attempts
+   - Shows detailed error information for debugging
+   - Uses conditional rendering with the `&&` operator
+
+2. **Styling**:
+
+   - Uses Tailwind CSS for responsive design
+   - Matches Spotify's brand color (green-500)
+   - Implements hover states (hover:bg-green-700)
+   - Centers content both vertically and horizontally
+
+3. **Authentication Flow**:
+
+   - The login button links to Next Auth's signin endpoint
+   - Specifically targets Spotify as the authentication provider
+   - Handles the OAuth flow automatically through Next Auth
+
+4. **Server-Side Operations**:
+   - Uses `async/await` for session checking
+   - Implements server-side redirects for better security
+   - Handles URL parameters server-side
+
+## Important Details
+
+1. **Page Location**:
+
+   - Must be in `src/app/login/page.tsx`
+   - Next.js uses this path to create the `/login` route
+
+2. **Server Component**:
+
+   - This is a Server Component (note the async function)
+   - Can directly use server-side operations
+   - No client-side JavaScript needed for basic functionality
+
+3. **Type Safety**:
+   - Uses TypeScript for props and parameters
+   - Provides better development experience
+   - Catches potential errors at compile time
+
+## Testing the Implementation
+
+1. Make sure you're logged out
+2. Visit `/login`
+3. Click the "Sign in with Spotify" button
+4. Should redirect to Spotify's OAuth page
+5. After authentication, should redirect to dashboard
+
+## Common Issues
+
+1. **Redirect Loops**:
+
+   - Check session logic
+   - Verify authOptions configuration
+
+2. **Styling Issues**:
+
+   - Ensure Tailwind is properly configured
+   - Check class name syntax
+
+3. **Type Errors**:
+   - Verify import paths
+   - Check TypeScript configuration
+
+## Committing Your Changes
+
+After implementing and testing your login page, make sure to commit your changes:
+
+1. Check your changes:
+
+```bash
+git status
+```
+
+2. Stage the new files:
+
+```bash
+git add src/app/login/page.tsx
+```
+
+3. Commit with a descriptive message:
+
+```bash
+git commit -m "feat: add login page with spotify authentication"
+```
+
+4. Push to your fork:
+
+```bash
+git push origin main
+```
+
+💡 Tip: It's good practice to commit your code once you have a working implementation. This helps track your progress and makes it easier to revert changes if needed.
+
+[Rest of the previous content remains the same...]
+
+Remember: This login page is crucial for user experience - it's the first interaction many users will have with your application. The implementation prioritizes simplicity and security while maintaining a professional appearance.
+
+Need help? Check the resources or ask in Discord!
